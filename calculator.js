@@ -5,6 +5,7 @@ function calculator() {
   let num2 = "";
   let operator = "";
 
+//  Function to calculate the operations
   function operate(num1, num2, operator) {
     num1 = parseFloat(num1);
     num2 = parseFloat(num2);
@@ -24,6 +25,7 @@ function calculator() {
       button.addEventListener("click", function () {
         const value = button.textContent;
 
+        // Handles Number input
         if (value >= "0" && value <= "9") {
           if (operator) {
             if (num2 === "0") {
@@ -40,23 +42,35 @@ function calculator() {
           }
           display.textContent = num1 + (operator ? ` ${operator} ${num2}` : "");
         }
+        
+        // Handles decimal input
+          if(value === "." && (!num2.includes(".")|| num2 === "")){
+            if(operator){
+              num2+= value;
+            }
+            else{
+              num1+=value;
+            }
+            display.textContent = num1 + (operator? ` ${operator} ${num2}`:"");
+          }
 
-
+  
+        // Handles operator input
         if (["+", "-", "x", "/"].includes(value)) {
           if (num2 !== "") {
             num1 = operate(num1, num2, operator);
             display.textContent = num1 + ` ${value}`;
-            num2 = ""; // reset num2 for the next number input
+            num2 = "";
           } else {
             display.textContent = num1 + ` ${value}`;
           }
           operator = value;
         }
 
-
+        // Handles output
         if (value === "=") {
-          if (num2 === "") {
-            display.textContent = num1;
+          if (num1 === "" || num2 === "") {
+            display.textContent = "0";
           } else {
             display.textContent = operate(num1, num2, operator);
             num1 = display.textContent;
@@ -64,11 +78,27 @@ function calculator() {
             operator = "";
           }
         }
+
+      //  Handles clear functionality
         if (value === "Clear") {
           num1 = "";
           num2 = "";
           operator = "";
           display.textContent = "0";
+        }
+      
+      // Handles backspace for each input 
+        if (value === "Backspace") {
+          if (num2) {
+            num2 = num2.slice(0, -1);
+            display.textContent = num1 + (operator ? ` ${operator} ${num2}` : "");
+          } else if (operator) {
+            operator = "";
+            display.textContent = num1||"0";
+          } else {
+            num1 = num1.slice(0, -1);
+            display.textContent = num1||"0";
+          }
         }
       });
     });
