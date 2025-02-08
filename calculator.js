@@ -5,23 +5,21 @@ function calculator() {
   let num2 = "";
   let operator = "";
 
-
   function operate(num1, num2, operator) {
     num1 = parseFloat(num1);
     num2 = parseFloat(num2);
     if (operator === "+") {
-      return num1+num2;
+      return num1 + num2;
     } else if (operator === "-") {
-      return num1-num2;
+      return num1 - num2;
     } else if (operator === "x") {
-      return num1*num2;
+      return num1 * num2;
     } else if (operator === "/") {
-      return num1/num2;
+      return num1 / num2;
     }
   }
 
   function show() {
-    //for (let button of buttons){
     buttons.forEach((button) => {
       button.addEventListener("click", function () {
         const value = button.textContent;
@@ -40,27 +38,30 @@ function calculator() {
             }
           }
           display.textContent = num1 + (operator ? ` ${operator} ${num2}` : "");
-    }
-    if (value === "+" || value === "-" || value === "x" || value === "/") {
-      operator = value;
-      display.textContent = num1 + ` ${operator}`;
-    }
-    if (value === "=") {
-      display.textContent = operate(num1, num2, operator);
-      num1 = display.textContent;
-      num2 = "";
-      operator = "";
-    }
-    if (value === "Clear") {
-      num1 = "";
-      num2 = "";
-      operator = "";
-      display.textContent = "0";
-    }
-  });
-});
+        }
+        if (value === "+" || value === "-" || value === "x" || value === "/") {
+          operator = value;
+          display.textContent = num1 + ` ${operator}`;
+        }
+        if (value === "=") {
+          if (num2 === "") {
+            display.textContent = num1;
+          } else {
+            display.textContent = operate(num1, num2, operator);
+            num1 = display.textContent;
+            num2 = "";
+            operator = "";
+          }
+        }
+        if (value === "Clear") {
+          num1 = "";
+          num2 = "";
+          operator = "";
+          display.textContent = "0";
+        }
+      });
+    });
   }
-  
   show();
 }
 
