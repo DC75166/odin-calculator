@@ -13,7 +13,7 @@ function calculator() {
       return num1 + num2;
     } else if (operator === "-") {
       return num1 - num2;
-    } else if (operator === "x") {
+    } else if (operator === "*") {
       return num1 * num2;
     } else if (operator === "/") {
       return num1 / num2;
@@ -22,9 +22,41 @@ function calculator() {
 
   function show() {
     buttons.forEach((button) => {
+      // For mouse input
       button.addEventListener("click", function () {
         const value = button.textContent;
+        
+        handleInput(value);
+      });
+    });
 
+    // For keyboard input
+    document.addEventListener("keydown", function(event){
+        const key = event.key;
+
+       // Prevent default behavior for certain keys like Enter and Escape
+         if (key === "Enter" || key === "Escape") {
+            event.preventDefault(); 
+            // console.log(e) // Prevent default actions (like form submission or browser shortcuts)
+        }
+
+        if(key>="0" || key<="9"){
+          handleInput(key);
+        }
+        else if (["+", "-", "*", "/"].includes(key)) {
+          handleInput(key);  // Operators
+        } else if (key === "=" || key === "Enter") {
+          handleInput("=");  // Equals key or Enter key
+        } else if (key === "Backspace") {
+          handleInput("Backspace");  // Backspace key
+        } else if (key === "Escape") {
+          handleInput("Clear");  // Escape key for clearing
+        }
+    });
+  }
+
+
+    function handleInput(value){
         // Handles Number input
         if (value >= "0" && value <= "9") {
           if (operator) {
@@ -56,7 +88,7 @@ function calculator() {
 
   
         // Handles operator input
-        if (["+", "-", "x", "/"].includes(value)) {
+        if (["+", "-", "*", "/"].includes(value)) {
           if (num2 !== "") {
             num1 = operate(num1, num2, operator);
             display.textContent = num1 + ` ${value}`;
@@ -68,10 +100,12 @@ function calculator() {
         }
 
         // Handles output
-        if (value === "=") {
-          if (num1 === "" || num2 === "") {
-            display.textContent = "0";
-          } else {
+        // Handles output
+        if (value === "=" || value === "Enter") {
+          if (!(operator||num2)){
+            display.textContent = num1||"0";
+          }
+          else {
             display.textContent = operate(num1, num2, operator);
             num1 = display.textContent;
             num2 = "";
@@ -80,7 +114,7 @@ function calculator() {
         }
 
       //  Handles clear functionality
-        if (value === "Clear") {
+        if (value === "Clear" || value === "Escape") {
           num1 = "";
           num2 = "";
           operator = "";
@@ -100,8 +134,6 @@ function calculator() {
             display.textContent = num1||"0";
           }
         }
-      });
-    });
   }
 
   show();

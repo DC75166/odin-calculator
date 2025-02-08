@@ -46,9 +46,6 @@ display: flex;
 justify-content: right; 
 padding-right: 20px;  
 }
-/* #row1{
-   background-color: rgba(232, 41, 41, 0.749);     
-} */
 #display {
     width: 100%;
     font-size: 24px;
