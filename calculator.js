@@ -23,6 +23,7 @@ function calculator() {
     buttons.forEach((button) => {
       button.addEventListener("click", function () {
         const value = button.textContent;
+
         if (value >= "0" && value <= "9") {
           if (operator) {
             if (num2 === "0") {
@@ -40,9 +41,14 @@ function calculator() {
           display.textContent = num1 + (operator ? ` ${operator} ${num2}` : "");
         }
         if (value === "+" || value === "-" || value === "x" || value === "/") {
+          if(num2){
+            num1 = operate(num1, num2, operator);
+            num2 = "";
+            display.textContent = num1 + ` ${operator}`;
+          }
           operator = value;
           display.textContent = num1 + ` ${operator}`;
-        }
+          }
         if (value === "=") {
           if (num2 === "") {
             display.textContent = num1;
@@ -62,6 +68,7 @@ function calculator() {
       });
     });
   }
+
   show();
 }
 
