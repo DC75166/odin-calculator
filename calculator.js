@@ -24,8 +24,7 @@ function calculator() {
     buttons.forEach((button) => {
       // For mouse input
       button.addEventListener("click", function () {
-        const value = button.textContent;
-        
+        const value = button.textContent;    
         handleInput(value);
       });
     });
@@ -81,7 +80,9 @@ function calculator() {
               num2+= value;
             }
             else{
-              num1+=value;
+              if(!num1.includes(".")){
+                num1+=value;
+              }
             }
             display.textContent = num1 + (operator? ` ${operator} ${num2}`:"");
           }
@@ -99,7 +100,7 @@ function calculator() {
           operator = value;
         }
 
-        // Handles output
+
         // Handles output
         if (value === "=" || value === "Enter") {
           if (!(operator||num2)){
