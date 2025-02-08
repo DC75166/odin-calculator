@@ -5,6 +5,7 @@ function calculator() {
   let num2 = "";
   let operator = "";
 
+
 //  Function to calculate the operations
   function operate(num1, num2, operator) {
     num1 = parseFloat(num1);
@@ -36,7 +37,6 @@ function calculator() {
        // Prevent default behavior for certain keys like Enter and Escape
          if (key === "Enter" || key === "Escape") {
             event.preventDefault(); 
-            // console.log(e) // Prevent default actions (like form submission or browser shortcuts)
         }
 
         if(key>="0" || key<="9"){
