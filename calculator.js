@@ -40,15 +40,20 @@ function calculator() {
           }
           display.textContent = num1 + (operator ? ` ${operator} ${num2}` : "");
         }
-        if (value === "+" || value === "-" || value === "x" || value === "/") {
-          if(num2){
+
+
+        if (["+", "-", "x", "/"].includes(value)) {
+          if (num2 !== "") {
             num1 = operate(num1, num2, operator);
-            num2 = "";
-            display.textContent = num1 + ` ${operator}`;
+            display.textContent = num1 + ` ${value}`;
+            num2 = ""; // reset num2 for the next number input
+          } else {
+            display.textContent = num1 + ` ${value}`;
           }
           operator = value;
-          display.textContent = num1 + ` ${operator}`;
-          }
+        }
+
+
         if (value === "=") {
           if (num2 === "") {
             display.textContent = num1;
