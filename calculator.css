@@ -49,3 +49,11 @@ padding-right: 20px;
 #row1{
    background-color: rgba(245, 99, 99, 0.749);     
 }
+#display {
+    width: 100%;
+    font-size: 24px;
+    text-align: right;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
